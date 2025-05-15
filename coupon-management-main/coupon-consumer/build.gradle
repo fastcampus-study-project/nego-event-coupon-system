@@ -1,0 +1,14 @@
+dependencies {
+    // Coupon Core
+    implementation project(':coupon-core')
+    // Spring Boot Web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // Spring Boot
+    implementation 'org.springframework.boot:spring-boot-starter'
+    // Spring Boot Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnitPlatform()
+}

@@ -1,0 +1,5 @@
+rootProject.name = 'coupon-management-main'
+
+include('coupon-api')
+include('coupon-core')
+include('coupon-consumer')
