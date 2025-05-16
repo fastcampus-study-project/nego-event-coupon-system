@@ -6,15 +6,18 @@ import com.fastcampus.coupon_core.exception.CouponIssueException;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import static com.fastcampus.coupon_core.exception.ErrorCode.*;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "coupons")
 public class Coupon extends BaseTimeEntity {
 
@@ -45,18 +48,6 @@ public class Coupon extends BaseTimeEntity {
 
     @Column(nullable = false)
     private LocalDateTime dateIssueEnd;
-
-    @Builder
-    private Coupon(String title, CouponType couponType, Integer totalQuantity, Integer issuedQuantity, Integer discountAmount, Integer minAvailableAmount, LocalDateTime dateIssueStart, LocalDateTime dateIssueEnd) {
-        this.title = title;
-        this.couponType = couponType;
-        this.totalQuantity = totalQuantity;
-        this.issuedQuantity = issuedQuantity;
-        this.discountAmount = discountAmount;
-        this.minAvailableAmount = minAvailableAmount;
-        this.dateIssueStart = dateIssueStart;
-        this.dateIssueEnd = dateIssueEnd;
-    }
 
     public static Coupon of(String title, CouponType couponType, Integer totalQuantity, Integer discountAmount, Integer minAvailableAmount, LocalDateTime dateIssueStart, LocalDateTime dateIssueEnd) {
         return Coupon.builder()
