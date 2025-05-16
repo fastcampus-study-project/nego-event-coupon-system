@@ -3,6 +3,8 @@ repositories {
 }
 
 dependencies {
+    // Redisson
+    implementation 'org.redisson:redisson-spring-boot-starter:3.46.0'
     // Spring Boot
     implementation 'org.springframework.boot:spring-boot-starter'
     // Spring Boot Test
