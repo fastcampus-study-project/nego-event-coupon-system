@@ -1,6 +1,3 @@
-TRUNCATE TABLE coupon_issues;
-TRUNCATE TABLE coupons;
-
 INSERT INTO coupons (
     title, 
     coupon_type, 
