@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.fastcampus.coupon_core.component.DistributeLockExecutor;
 import com.fastcampus.coupon_core.exception.CouponIssueException;
-import com.fastcampus.coupon_core.model.Coupon;
 import com.fastcampus.coupon_core.repository.redis.RedisRepository;
 import com.fastcampus.coupon_core.repository.redis.dto.CouponIssueRequest;
 import com.fastcampus.coupon_core.repository.redis.dto.CouponRedisEntity;
@@ -22,7 +21,6 @@ import static com.fastcampus.coupon_core.util.CouponRedisUtils.*;
 public class AsyncCouponIssueServiceV1 {
     private final RedisRepository redisRepository;
     private final CouponIssueRedisService couponIssueRedisService;
-    private final CouponIssueService couponIssueService;
     private final DistributeLockExecutor distributeLockExecutor;
     private final CouponCacheService couponCacheService;
     private final ObjectMapper objectMapper = new ObjectMapper();
