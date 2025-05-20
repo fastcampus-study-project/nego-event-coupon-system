@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.fastcampus.coupon_core.component.DistributeLockExecutor;
 import com.fastcampus.coupon_core.exception.CouponIssueException;
-import com.fastcampus.coupon_core.model.Coupon;
 import com.fastcampus.coupon_core.repository.redis.RedisRepository;
 import com.fastcampus.coupon_core.repository.redis.dto.CouponIssueRequest;
+import com.fastcampus.coupon_core.repository.redis.dto.CouponRedisEntity;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -21,24 +21,15 @@ import static com.fastcampus.coupon_core.util.CouponRedisUtils.*;
 public class AsyncCouponIssueServiceV1 {
     private final RedisRepository redisRepository;
     private final CouponIssueRedisService couponIssueRedisService;
-    private final CouponIssueService couponIssueService;
     private final DistributeLockExecutor distributeLockExecutor;
+    private final CouponCacheService couponCacheService;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public void issue(long couponId, long userId) {
-        Coupon coupon = couponIssueService.findCoupon(couponId);
-        if(!coupon.availableIssueDate()) {
-            throw new CouponIssueException(INVALID_COUPON_ISSUE_DATE, "발급 가능한 일자가 아닙니다. couponId: %s, issueStart: %s, issueEnd: %s".formatted(couponId, coupon.getDateIssueStart(), coupon.getDateIssueEnd()));
-        }
+        CouponRedisEntity coupon = couponCacheService.getCouponCache(couponId);
+        coupon.checkIssuableCoupon();
         distributeLockExecutor.execute("lock_%s".formatted(couponId), 3000, 3000, () -> {
-            if (!couponIssueRedisService.availableTotalIssueQuantity(coupon.getTotalQuantity(), couponId)) {
-                throw new CouponIssueException(INVALID_COUPON_ISSUE_QUANTITY,
-                        "발급 가능한 수량을 초과하였습니다. couponId: %s, userId: %s".formatted(couponId, userId));
-            }
-            if (!couponIssueRedisService.availableUserIssueQuantity(couponId, userId)) {
-                throw new CouponIssueException(DUPLICATED_COUPON_ISSUE,
-                        "이미 발급된 쿠폰입니다. couponId: %s, userId: %s".formatted(couponId, userId));
-            }
+            couponIssueRedisService.checkCouponIssueQuantity(coupon, userId);
             issueRequest(couponId, userId);
         });
     }

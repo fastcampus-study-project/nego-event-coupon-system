@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import com.fastcampus.coupon_core.exception.CouponIssueException;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
