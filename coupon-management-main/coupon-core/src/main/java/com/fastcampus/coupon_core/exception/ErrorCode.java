@@ -5,6 +5,7 @@ public enum ErrorCode {
     INVALID_COUPON_ISSUE_DATE("발급 가능한 일자가 아닙니다."),
     COUPON_NOT_EXIST("쿠폰 정책이 존재하지 않습니다."),
     DUPLICATED_COUPON_ISSUE("이미 발급된 쿠폰입니다."),
+    FAIL_COUPON_ISSUE_REQUEST("쿠폰 발급 요청 실패"),
     ;
 
     public final String message;
