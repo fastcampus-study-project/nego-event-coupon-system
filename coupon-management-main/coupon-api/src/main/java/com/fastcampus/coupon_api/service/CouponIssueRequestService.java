@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.fastcampus.coupon_api.dto.CouponIssueRequestDto;
 import com.fastcampus.coupon_core.service.AsyncCouponIssueServiceV1;
+import com.fastcampus.coupon_core.service.AsyncCouponIssueServiceV2;
 // import com.fastcampus.coupon_core.component.DistributeLockExecutor;
 import com.fastcampus.coupon_core.service.CouponIssueService;
 
@@ -18,6 +19,7 @@ public class CouponIssueRequestService {
     private final CouponIssueService couponIssueService;
     private final AsyncCouponIssueServiceV1 asyncCouponIssueServiceV1;
     // private final DistributeLockExecutor distributeLockExecutor;
+    private final AsyncCouponIssueServiceV2 asyncCouponIssueServiceV2;
 
     private final Logger logger = LoggerFactory.getLogger(CouponIssueRequestService.class.getSimpleName());
 
@@ -30,5 +32,9 @@ public class CouponIssueRequestService {
 
     public void asyncIssueRequestV1(CouponIssueRequestDto requestDto) {
         asyncCouponIssueServiceV1.issue(requestDto.couponId(), requestDto.userId());
+    }
+
+    public void asyncIssueRequestV2(CouponIssueRequestDto requestDto) {
+        asyncCouponIssueServiceV2.issue(requestDto.couponId(), requestDto.userId());
     }
 }
