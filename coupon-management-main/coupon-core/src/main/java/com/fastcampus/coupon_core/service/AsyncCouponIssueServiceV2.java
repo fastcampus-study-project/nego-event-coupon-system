@@ -1,10 +1,7 @@
 package com.fastcampus.coupon_core.service;
 
-import static com.fastcampus.coupon_core.exception.ErrorCode.INVALID_COUPON_ISSUE_QUANTITY;
-
 import org.springframework.stereotype.Service;
 
-import com.fastcampus.coupon_core.exception.CouponIssueException;
 import com.fastcampus.coupon_core.repository.redis.RedisRepository;
 import com.fastcampus.coupon_core.repository.redis.dto.CouponRedisEntity;
 
@@ -17,7 +14,7 @@ public class AsyncCouponIssueServiceV2 {
     private final CouponCacheService couponCacheService;
 
     public void issue(long couponId, long userId) {
-        CouponRedisEntity coupon = couponCacheService.getCouponCache(couponId);
+        CouponRedisEntity coupon = couponCacheService.getCouponLocalCache(couponId);
         coupon.checkIssuableCoupon();
         issueRequest(couponId, userId, coupon.totalQuantity());
     }

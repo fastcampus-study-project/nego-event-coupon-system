@@ -10,6 +10,8 @@ dependencies {
     implementation 'org.redisson:redisson-spring-boot-starter:3.46.0'
     // Spring Boot
     implementation 'org.springframework.boot:spring-boot-starter'
+    // Local Cache
+    implementation 'com.github.ben-manes.caffeine:caffeine'
     // Spring Boot Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
